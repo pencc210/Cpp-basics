@@ -19,5 +19,6 @@ int main(){
 
     cout<<weeks<<" weeks and "<<x_days<<" days."<<endl;
 
+    return 0;
 
 }
