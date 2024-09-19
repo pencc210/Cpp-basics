@@ -1,4 +1,4 @@
-/*This program recieves a number of different coins (quarters, dimes, 
+/*This program receives a number of different coins (quarters, dimes, 
 nickels and pennies) and outputs the sum in dollars and cents*/
 
 #include <iostream>
