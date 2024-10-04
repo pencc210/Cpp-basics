@@ -13,7 +13,7 @@ using namespace std;
 int main(){
 
     int decimal, num;
-    int i;
+    int i = 0;
     string numeral;
 
     cout<<"Enter decimal number:"<<endl;
