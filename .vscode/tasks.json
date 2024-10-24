@@ -29,7 +29,7 @@
                 "-fcolor-diagnostics",
                 "-fansi-escape-codes",
                 "-g",
-                "-std=c++17",   // Ensure that C++17 is used for the build task
+                "-std=c++17",  
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
