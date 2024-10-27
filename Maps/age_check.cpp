@@ -22,9 +22,11 @@ int main(){
 
     string name;
 
-    map<string, int> names;
-    names["Alice"] = 28;
-    names["Bob"] = 30;
+    map<string, int> names ={
+        {"Alice", 28},
+        {"Bob", 30}
+    };
+    
     names["Charlie"] = 22;
     names["Diana"] = 27;
     names["Eve"] = 35;
