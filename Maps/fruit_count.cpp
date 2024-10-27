@@ -8,17 +8,8 @@
 
 using namespace std;
 
-map <string, int> addFruit(map <string, int> &fruits, string fruitType){
-
-    auto itr = fruits.find(fruitType);
-
-    if(itr != fruits.end()){
-        itr-> second += 1;
-    }else{
-        fruits [fruitType] = 1;
-    }
-    return fruits;
-}
+//Adds a fruit of a specific type to the map fruits and returns it
+map <string, int> addFruit(map <string, int> &fruits, string fruitType);
 
 
 int main(){
@@ -30,9 +21,9 @@ int main(){
         cout<<"Please enter a fruit (type 'done' when finished): ";
         cin>>fruitType;
 
-        if(fruitType == "done"){
+        if(fruitType == "done"){         // End condition
             break;
-        }else{
+        }else{                           // Otherwise add fruit to list
             addFruit(fruits, fruitType);  
         }
         
@@ -44,4 +35,16 @@ int main(){
     }
 
     return 0;
+}
+
+map <string, int> addFruit(map <string, int> &fruits, string fruitType){
+
+    auto itr = fruits.find(fruitType);
+
+    if(itr != fruits.end()){     //Fruit is in list
+        itr-> second += 1;      // Add one to quanity
+    }else{                      // Fruit not in list
+        fruits [fruitType] = 1; // Add new fruit
+    }
+    return fruits;
 }
