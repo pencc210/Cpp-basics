@@ -46,5 +46,7 @@ map <string, int> addFruit(map <string, int> &fruits, string fruitType){
     }else{                      // Fruit not in list
         fruits [fruitType] = 1; // Add new fruit
     }
+
+    //Above can also be substituded by fruits[fruitType] ++;
     return fruits;
 }
