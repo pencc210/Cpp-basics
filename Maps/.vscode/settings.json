@@ -8,6 +8,7 @@
         "string": "cpp",
         "string_view": "cpp",
         "new": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "unordered_map": "cpp"
     }
 }
