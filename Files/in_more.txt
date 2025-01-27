@@ -1,0 +1,6 @@
+1	100	Man Cu
+2	95	James Dean
+4	60	Sop
+5	98	Jop
+6	90	Halumi
+7	100	Strudel. Can

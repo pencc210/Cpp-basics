@@ -12,6 +12,20 @@ mt19937 gen(rd());
 
 uniform_int_distribution<int> gridPlaceDist(0, gridCols - 1); //nums form 0 to 19, works for square grids
 
+
+//Helper fx for ant eating 
+pair<int, int> findTarget(int row, int col, char target, char (&arr)[gridRows][gridCols]) {
+    // Check up, down, left, right for the specified target
+    if (row - 1 >= 0 && arr[row - 1][col] == target) return {row - 1, col}; // Up
+    if (row + 1 < gridRows && arr[row + 1][col] == target) return {row + 1, col}; // Down
+    if (col - 1 >= 0 && arr[row][col - 1] == target) return {row, col - 1}; // Left
+    if (col + 1 < gridCols && arr[row][col + 1] == target) return {row, col + 1}; // Right
+
+    // No valid target found, return current position
+    return {row, col};
+}
+
+
 class Organism{
 
     int row;
@@ -34,23 +48,23 @@ class Organism{
     int getMarker(){ return marker; }
 
     //Other fx
-    void virtual move(Organism& o, char (&arr)[gridRows][gridCols]){
-        int row = o.getRow();
-        int col = o.getCol();
+    void virtual move(char (&arr)[gridRows][gridCols], vector<Ant>& ants){
+        int row = getRow();
+        int col = getCol();
         //cout << "Before moving: " << o.getRow() << ", " << o.getCol() << endl;
 
         if(row - 1 >= 0 && arr[row - 1][col] == '-'){ //Move up
-            o.setRow(row - 1);//Set coordinates to new space
+            setRow(row - 1);//Set coordinates to new space
         }else if(row + 1 < gridRows && arr[row + 1][col] == '-'){ //Move down
-            o.setRow(row + 1);
+            setRow(row + 1);
         }else if(col - 1 >= 0 && arr[row][col - 1] == '-'){ //Move left
-            o.setCol(col - 1);
+            setCol(col - 1);
         }else if(col + 1 < gridCols && arr[row][col + 1] == '-'){ //Move right
-            o.setCol(row + 1);
+            setCol(row + 1);
         }
         
         arr[row][col] = '-'; //Make empty space where org was
-        arr[o.getRow()][o.getCol()] = o.getMarker(); //Marker for new org position 
+        arr[getRow()][getCol()] = getMarker(); //Marker for new org position 
         //cout << "After moving: " << o.getRow() << ", " << o.getCol() << endl;
     }
 
@@ -99,15 +113,33 @@ class Doodlebug : public Organism {
     public:
     Doodlebug(int row, int col, int breedTime, char marker) : Organism(row, col, breedTime, marker) {}
 
-    void move(Organism& o, char (&arr)[gridRows][gridCols]) override {
-        int row = o.getRow();
-        int col = o.getCol();
+    void move(char (&arr)[gridRows][gridCols], vector<Ant>& ants) override {
+        int row = getRow();
+        int col = getCol();
 
         //Check for ants to eat 
-        if(arr[row - 1][col] == 'o'){
+        auto [targetRow, targetCol] = findTarget(row, col, 'o', arr);
 
+        if (targetRow != row || targetCol != col) {
+            // Step 2: Eat the ant (replace it with the doodlebug)
+            arr[targetRow][targetCol] = 'X';
+            setRow(targetRow);
+            setCol(targetCol);
+            //Errase eaten ant from vector
+            for (auto it = ants.begin(); it != ants.end(); ++it) {
+                if (it->getRow() == targetRow && it->getCol() == targetCol) {
+                    ants.erase(it);
+                    break;
+                }
+        }
+        } else {
+            // No ant found, fallback to normal movement
+            Organism::move(arr, ants); // Explicitly call the base class's move function
+            return;
         }
     }
+
+
 
 };
 
@@ -130,8 +162,8 @@ int main(){
     int antNum = 2;
     int doodleNum = 3;
 
-    vector <Organism> ants;
-    vector <Organism> doodlebugs;
+    vector <Ant> ants;
+    vector <Doodlebug> doodlebugs;
     initialSpawn(antNum, doodleNum, grid, ants, doodlebugs); //Place initial number of ants and dbugs on grid
 
     int i = 0;
@@ -141,11 +173,11 @@ int main(){
         printGrid(grid, gridCols);
         }else if(i > 0){
             for(auto& db : doodlebugs){ //Move each doodlebug
-                db.move(db ,grid);
+                db.move(grid, ants);
             }
 
             for(auto& ant : ants){ //Move each ant
-                ant.move(ant ,grid);
+                ant.move(grid, ants);
             }
 
            vector<Organism> newAnts, newDoodlebugs; //Vectors for baby organisms
@@ -190,8 +222,8 @@ void printGrid(char arr[][gridCols], int rows){
     }
 }
 
-void initialSpawn(int antNum, int doodleNum, char arr[][gridCols], vector <Organism>& ants, 
-vector <Organism>& doodlebugs){
+void initialSpawn(int antNum, int doodleNum, char arr[][gridCols], vector <Ant>& ants, 
+vector <Doodlebug>& doodlebugs){
     
     //Ants placement
     for(int i = 0; i < antNum; i++){
