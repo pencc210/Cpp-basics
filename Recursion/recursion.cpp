@@ -33,10 +33,10 @@ int recursiveSum(int start, int end){
 
 }
 
-//Returns the factorial of num
+//Returns the factorial of num (3! = 1*2*3)
 int recFactorial(int num){
     if(num == 0){
-        return 1; //Base case 
+        return 1; //Base case, 0 factorial is 1
     }
     else{
         return num * recFactorial(num - 1); //Case for two numbers 
@@ -53,8 +53,36 @@ int recDigitSum(int num){
     }
 }
 
+//Returns number of digits in num
+int countDigits(int num){
+    if(num/10 == 0){
+        return 1;
+    }else{
+        return 1 + countDigits(num/10);
+    }
+}
+
+int power(int base, int exponent){
+    if(exponent == 0){
+        return 1;
+    }else{
+        return base * power(base, exponent - 1);
+    }
+}
+
+int sum(int n){
+    if(n == 0){
+        return 0;
+    }else{
+        return n + sum(n-1);
+    }
+}
+
 int main(){
     cout<<recursiveSum(3, 6)<<endl;
     cout<<recFactorial(5)<<endl;
     cout<<recDigitSum(123)<<endl;
+    cout<<countDigits(123)<<endl;
+    cout<<power(2,2)<<endl;
+    cout<<sum(2)<<endl;
 }
