@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-// Recieves a vector with names and grades, returns a vector of names and their average grade
+// Recieves a map with names and grades, returns a map of names and their average grade
 map <string, int> calculateAverage(map <string, vector<int> > &students);
 
 
@@ -19,6 +19,7 @@ int main(){
 
     studentAverages = calculateAverage(students);
 
+    //Print out averages
     for (auto itr= studentAverages.begin(); itr != studentAverages.end(); itr++){
         string name = itr->first;
         double average = itr->second;
@@ -43,7 +44,7 @@ map <string, int> calculateAverage(map <string, vector<int> > &students){
         double average = 0; 
 
         if(grades.empty()){ //grades vector is empty
-            studentsAverage[name] = -1;
+            studentsAverage[name] = -1; //Average for this student is -1 (empty flag)
         }else{ //Grades vector has values so calculate average
             for(int grade : grades){ //Add up the grades of one student
                 sum += grade;

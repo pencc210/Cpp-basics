@@ -1,6 +1,6 @@
 /*
  * Hackerrank: This program determines a string to be valid if its characters appear the same number
- * of times with only one character deletion possible. Is the string is valid it prints
+ * of times with only one character deletion possible. If the string is valid it prints
  * out YES and if it's not it prints out NO. 
  */
 

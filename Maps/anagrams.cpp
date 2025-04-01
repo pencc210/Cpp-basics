@@ -28,7 +28,7 @@ int main(){
 
     //Check if str1 and str2 are anagrams
     string str2 = "opp";
-    cout<<anagrams(str1, str2)<<endl;
+    cout<<(anagrams(str1, str2) ? "They are anagrams" : "They are not anagrams")<<endl;
 
     //Count the anagramatic full word pairs in the list words
     vector <string> words = {"abba", "baba", "opp", "ppo", "prop", "sup"};
@@ -54,7 +54,6 @@ vector<string> allSubstrings(string str){
     }
 
     return substrings;
-
 }
 
 //Function to check if two strings are anagrams
@@ -81,7 +80,7 @@ bool anagrams(string str1, string str2){
     return(lettersStr1 == lettersStr2);
 }
 
-//Function to count anagramatic pairs in a list of words
+//Function to count anagramatic pairs (two words that are anagrams of each other) in a list of words
 int anagramaticPairs(vector <string> words){
 
     unordered_map <string, int> anagramGroups;
@@ -100,6 +99,7 @@ int anagramaticPairs(vector <string> words){
         int n = x.second;
         if( n > 1){
             // For n items in a group, the number of unique pairs is n * (n - 1) / 2
+            // from combinations n choose 2
             count += (n * (n - 1)) / 2;
         }
     }
