@@ -18,6 +18,7 @@ int sumOfSquares(int arr[], int arrSize){
 
 }
 
+// Returns true of arr elements are sorted 
 bool isSorted(int arr[], int arrSize){
     if(arrSize == 1){
         return true;
